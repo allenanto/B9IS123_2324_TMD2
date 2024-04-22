@@ -84,7 +84,7 @@ def add_property():
         new_property = Property(name=name, description=description, location=location, price=price)
         db.session.add(new_property)
         db.session.commit()
-        return redirect(url_for('dashboard'))  # Redirect to dashboard after adding property
+        return redirect(url_for('dashboard'))
     return render_template('add_property.html')
 
 if __name__ == '__main__':

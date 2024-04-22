@@ -51,12 +51,15 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        if not username or not password:
+            flash('Both username and password are required.', 'error')
+            return redirect(request.url)
         user = User.query.filter_by(username=username, password=password).first()
         if user:
             authenticated_user = username
             return redirect(url_for('index'))
         else:
-            return render_template('login.html', message='Invalid credentials')
+            flash('Invalid username or password.', 'error')
     return render_template('login.html')
 
 @app.route('/logout')

@@ -23,7 +23,6 @@ def index():
         properties = Property.query.all()
         return render_template('index.html', properties=properties)
     else:
-        create_properties()
         return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -66,7 +65,7 @@ def book_property(property_id):
     property = Property.query.get_or_404(property_id)
     property.available = False
     db.session.commit()
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('index'))
 
 @app.route('/add_property', methods=['GET', 'POST'])
 def add_property():

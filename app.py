@@ -20,7 +20,8 @@ authenticated_user = None
 @app.route('/')
 def index():
     if authenticated_user:
-        return render_template('index.html')
+        properties = Property.query.all()
+        return render_template('index.html', properties=properties)
     else:
         return redirect(url_for('login'))
 

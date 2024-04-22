@@ -3,11 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real Estate App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
+    <title>Home</title>
 </head>
 <body>
     {% include 'navbar.html' %}
+
+    <h1>Properties</h1>
+    <ul>
+        {% for property in properties %}
+            <li>
+                <strong>{{ property.name }}</strong><br>
+                Location: {{ property.location }}<br>
+                Price: ${{ property.price }}<br>
+                <form action="{{ url_for('book_property', property_id=property.id) }}" method="post">
+                    <button type="submit">Book</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

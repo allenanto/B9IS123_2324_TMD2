@@ -27,5 +27,16 @@
         <input type="email" id="email" name="email"><br>
         <input type="submit" value="Register">
     </form>
+    
+    <script>
+        function validateForm() {
+            var emailInput = document.getElementById("email");
+            if (!emailInput.checkValidity()) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 </html>

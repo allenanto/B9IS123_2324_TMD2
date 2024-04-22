@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask import flash
-from models import db, User
+from models import db, User, Property
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'secret_key'  # Replace with your actual secret key
@@ -55,6 +55,10 @@ def login():
             return render_template('login.html', message='Invalid credentials')
     return render_template('login.html')
 
+@app.route('/dashboard')
+def dashboard():
+    properties = Property.query.filter_by(available=True).all()
+    return render_template('dashboard.html', properties=properties)
 
 if __name__ == '__main__':
     app.run(debug=True)

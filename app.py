@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask import flash
 from models import db, User
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'secret_key'  # Replace with your actual secret key
 
 

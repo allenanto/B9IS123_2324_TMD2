@@ -66,8 +66,6 @@ def dashboard():
     properties = Property.query.filter_by(available=True).all()
     return render_template('dashboard.html', properties=properties)
 
-from flask import redirect, url_for
-
 @app.route('/book/<int:property_id>', methods=['POST'])
 def book_property(property_id):
     property = Property.query.get_or_404(property_id)
@@ -75,6 +73,19 @@ def book_property(property_id):
     db.session.commit()
     return redirect(url_for('dashboard'))
 
+@app.route('/add_property', methods=['GET', 'POST'])
+def add_property():
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+        location = request.form['location']
+        price = float(request.form['price'])
+        # Create a new property entry in the database
+        new_property = Property(name=name, description=description, location=location, price=price)
+        db.session.add(new_property)
+        db.session.commit()
+        return redirect(url_for('dashboard'))  # Redirect to dashboard after adding property
+    return render_template('add_property.html')
 
 
 if __name__ == '__main__':

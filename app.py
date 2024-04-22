@@ -23,6 +23,7 @@ def index():
         properties = Property.query.all()
         return render_template('index.html', properties=properties)
     else:
+        create_properties()
         return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -80,7 +81,6 @@ def add_property():
         db.session.commit()
         return redirect(url_for('dashboard'))  # Redirect to dashboard after adding property
     return render_template('add_property.html')
-
 
 if __name__ == '__main__':
     app.run(debug=True)

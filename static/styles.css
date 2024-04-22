@@ -55,8 +55,17 @@ form input[type="submit"]:hover {
     padding-top: 20px; /* Add padding to separate from the form */
 }
 
+.log {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: flex-start; /* Aligns items at the top */
+    height: 50%;
+    padding: 30px;
+}
+
 h1 {
     text-align: center;
+    
 }
 
 .form-group {

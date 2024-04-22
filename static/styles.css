@@ -132,7 +132,7 @@ body {
     padding: 0;
 }
 
-nav {
+header {
     background-color: #333; /* Navbar background color */
     color: #fff; /* Navbar text color */
     padding: 10px; /* Navbar padding */
@@ -149,12 +149,10 @@ nav ul li {
     margin-right: 20px; /* Add space between navbar items */
 }
 
-/* Style the tiles */
+/* Style the content */
 .content {
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column; /* Arrange content in a column */
-    align-items: flex-start; /* Align content to the start */
     padding: 20px;
+    margin-top: 20px; /* Adjust based on navbar height */
 }
 
 h1.log {

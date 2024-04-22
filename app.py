@@ -60,5 +60,16 @@ def dashboard():
     properties = Property.query.filter_by(available=True).all()
     return render_template('dashboard.html', properties=properties)
 
+from flask import redirect, url_for
+
+@app.route('/book/<int:property_id>', methods=['POST'])
+def book_property(property_id):
+    property = Property.query.get_or_404(property_id)
+    property.available = False
+    db.session.commit()
+    return redirect(url_for('dashboard'))
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)

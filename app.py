@@ -51,20 +51,14 @@ def login():
         user = User.query.filter_by(username=username, password=password).first()
         if user:
             authenticated_user = username
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('index'))
         else:
             return render_template('login.html', message='Invalid credentials')
     return render_template('login.html')
 
 @app.route('/logout')
 def logout():
-    logout_user()
     return redirect(url_for('login'))
-
-@app.route('/dashboard')
-def dashboard():
-    properties = Property.query.filter_by(available=True).all()
-    return render_template('dashboard.html', properties=properties)
 
 @app.route('/book/<int:property_id>', methods=['POST'])
 def book_property(property_id):

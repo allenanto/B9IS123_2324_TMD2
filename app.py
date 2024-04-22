@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask import flash
 from models import db, User, Property
+from flask_login import logout_user
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'secret_key'  # Replace with your actual secret key
@@ -50,10 +51,15 @@ def login():
         user = User.query.filter_by(username=username, password=password).first()
         if user:
             authenticated_user = username
-            return redirect(url_for('index'))
+            return redirect(url_for('dashboard'))
         else:
             return render_template('login.html', message='Invalid credentials')
     return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 @app.route('/dashboard')
 def dashboard():

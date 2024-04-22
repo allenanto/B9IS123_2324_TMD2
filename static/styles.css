@@ -61,10 +61,13 @@ form input[type="submit"]:hover {
     align-items: flex-start; /* Aligns items at the top */
     height: 50%;
     padding: 30px;
+    margin-right: 5%;
+    
 }
 
 h1 {
     text-align: center;
+    margin-right:30%;
     
 }
 

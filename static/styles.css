@@ -60,7 +60,7 @@ form input[type="submit"]:hover {
     justify-content: center; /* Centers horizontally */
     align-items: flex-start; /* Aligns items at the top */
     height: 50%;
-    padding: 30px;
+    padding: 40px;
     margin-right: 5%;
     
 }
@@ -113,4 +113,14 @@ input[type="submit"]:hover {
 .success {
     color: #28a745;
     font-size: 14px;
+}
+
+p {
+    
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: flex-start; /* Aligns items at the top */
+    height: 0px;
+    padding: 40px;
+    margin-right: 5%;
 }

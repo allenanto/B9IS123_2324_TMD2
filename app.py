@@ -6,6 +6,8 @@ from flask_login import logout_user
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'secret_key'  # Replace with your actual secret key
 
+# Register the admin Blueprint
+app.register_blueprint(admin_bp)
 
 # Configure database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'

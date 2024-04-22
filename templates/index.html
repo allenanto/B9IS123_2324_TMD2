@@ -10,17 +10,20 @@
 <body>
     {% include 'navbar.html' %}
 
-    <ul>
-        {% for property in properties %}
-            <li>
-                <strong>{{ property.name }}</strong><br>
-                Location: {{ property.location }}<br>
-                Price: ${{ property.price }}<br>
-                <form action="{{ url_for('book_property', property_id=property.id) }}" method="post">
-                    <button type="submit">Book</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="content">
+        <h1 class="log">Properties</h1>
+        <ul>
+            {% for property in properties %}
+                <li>
+                    <strong>{{ property.name }}</strong><br>
+                    Location: {{ property.location }}<br>
+                    Price: ${{ property.price }}<br>
+                    <form action="{{ url_for('book_property', property_id=property.id) }}" method="post">
+                        <button type="submit">Book</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>

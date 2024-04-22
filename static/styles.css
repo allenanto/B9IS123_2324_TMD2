@@ -1,9 +1,40 @@
 /* Global styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     margin: 0;
-    padding: 0;
+  }
+
+form {
+    width: 300px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+form label,
+form input {
+    display: block;
+    margin-bottom: 10px;
+    text-align: center; /* Centering the text */
+}
+
+form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0056b3;
 }
 
 .container {

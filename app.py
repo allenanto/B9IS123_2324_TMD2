@@ -135,10 +135,46 @@ def admin_required(f):
     return decorated_function
 
 @app.route('/admin/dashboard')
-@admin_required
 def admin_dashboard():
-    return render_template('dashboard_admin.html')
+    properties = Property.query.all()
+    return render_template('dashboard_admin.html', properties=properties)
 
+@app.route('/admin/create_property', methods=['GET', 'POST'])
+def create_property():
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+        location = request.form['location']
+        price = float(request.form['price'])
+        available = request.form.get('available', False)
+        new_property = Property(name=name, description=description, location=location, price=price, available=available)
+        db.session.add(new_property)
+        db.session.commit()
+        flash('Property created successfully!', 'success')
+        return redirect(url_for('admin_dashboard'))
+    return render_template('create_property.html')
+
+@app.route('/admin/update_property/<int:property_id>', methods=['GET', 'POST'])
+def update_property(property_id):
+    property = Property.query.get_or_404(property_id)
+    if request.method == 'POST':
+        property.name = request.form['name']
+        property.description = request.form['description']
+        property.location = request.form['location']
+        property.price = float(request.form['price'])
+        property.available = request.form.get('available', False)
+        db.session.commit()
+        flash('Property updated successfully!', 'success')
+        return redirect(url_for('admin_dashboard'))
+    return render_template('update_property.html', property=property)
+
+@app.route('/admin/delete_property/<int:property_id>')
+def delete_property(property_id):
+    property = Property.query.get_or_404(property_id)
+    db.session.delete(property)
+    db.session.commit()
+    flash('Property deleted successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
 
 if __name__ == '__main__':
     app.run(debug=True)

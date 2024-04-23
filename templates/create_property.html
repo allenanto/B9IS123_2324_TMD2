@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Property</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <h2>Create Property</h2>
+    <form action="{{ url_for('create_property') }}" method="post">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required></textarea><br>
+        <label for="location">Location:</label><br>
+        <input type="text" id="location" name="location" required><br>
+        <label for="price">Price:</label><br>
+        <input type="number" id="price" name="price" step="0.01" required><br>
+        <label for="available">Available:</label><br>
+        <select id="available" name="available" required>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select><br>
+        <input type="submit" value="Create">
+    </form>
+</body>
+</html>

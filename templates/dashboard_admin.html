@@ -4,9 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
 </head>
 <body>
     <h2>Welcome to the Admin Dashboard</h2>
-    <p>This is where you can manage properties and perform administrative tasks.</p>
+    <a href="{{ url_for('create_property') }}">Create New Property</a>
+    <br><br>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        {% for property in properties %}
+        <tr>
+            <td>{{ property.name }}</td>
+            <td>{{ property.description }}</td>
+            <td>
+                <a href="{{ url_for('update_property', property_id=property.id) }}">Edit</a>
+                <a href="{{ url_for('delete_property', property_id=property.id) }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>

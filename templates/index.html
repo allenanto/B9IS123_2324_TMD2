@@ -8,16 +8,15 @@
 
 </head>
 <body>
-    <div>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
-            </ul>
-        </nav>
-    </div>
 
     <div class="content">
+        <div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </nav>
         <h1 class="log">Properties</h1>
         <ul>
             {% for property in properties %}
@@ -31,6 +30,8 @@
                 </li>
             {% endfor %}
         </ul>
+        
+    </div>
     </div>
 </body>
 </html>

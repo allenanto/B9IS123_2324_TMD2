@@ -8,6 +8,7 @@
 </head>
     
 <body>
+    <div>
     <h1 class="log">Login</h1>
     <form action="{{ url_for('login') }}" method="post">
         <label for="username">Username:</label>
@@ -17,5 +18,6 @@
         <input type="submit" value="Login">
     </form>
     <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+    </div>
 </body>
 </html>

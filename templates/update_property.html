@@ -8,6 +8,7 @@
 
 </head>
 <body>
+    <div>
     <h2>Update Property</h2>
     <form action="{{ url_for('update_property', property_id=property.id) }}" method="post">
         <label for="name">Name:</label><br>
@@ -25,5 +26,6 @@
         </select><br>
         <input type="submit" value="Update">
     </form>
+</div>
 </body>
 </html>

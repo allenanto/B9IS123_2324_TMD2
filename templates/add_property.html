@@ -8,6 +8,7 @@
 
 </head>
 <body>
+    <div>
     <h1>Add Property</h1>
     <form action="{{ url_for('add_property') }}" method="post">
         <label for="name">Name:</label><br>
@@ -20,5 +21,6 @@
         <input type="number" id="price" name="price" step="0.01" required><br>
         <button type="submit">Add Property</button>
     </form>
+</div>
 </body>
 </html>

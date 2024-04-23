@@ -1,13 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
-from flask import flash
-from models import db, User, Property
+from flask import flash, session
+from models import db, User, Property, Admin
 from flask_login import logout_user
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'secret_key'  # Replace with your actual secret key
 
-# Register the admin Blueprint
-app.register_blueprint(admin_bp)
 
 # Configure database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -88,6 +86,59 @@ def add_property():
         db.session.commit()
         return redirect(url_for('dashboard'))
     return render_template('add_property.html')
+
+@app.route('/admin/register', methods=['GET', 'POST'])
+def register_admin():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        existing_admin = Admin.query.filter_by(username=username).first()
+        if existing_admin:
+            flash('Username already exists. Please choose a different one.', 'error')
+            return redirect(url_for('register_admin'))
+
+        new_admin = Admin(username=username, password=password)
+        db.session.add(new_admin)
+        db.session.commit()
+
+        flash('Admin registration successful! You can now login.', 'success')
+        return redirect(url_for('admin_login'))
+
+    return render_template('register_admin.html')
+
+@app.route('/admin/login', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        admin = Admin.query.filter_by(username=username).first()
+
+        if admin and admin.password == password:
+            session['admin_logged_in'] = True
+            flash('Logged in successfully!', 'success')
+            return redirect(url_for('admin_dashboard'))
+        else:
+            flash('Invalid username or password. Please try again.', 'error')
+
+    return render_template('login_admin.html')
+
+from functools import wraps
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('admin_logged_in'):
+            return redirect(url_for('admin_login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+@app.route('/admin/dashboard')
+@admin_required
+def admin_dashboard():
+    return render_template('dashboard_admin.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

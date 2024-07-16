@@ -25,7 +25,7 @@ def index():
         properties = Property.query.all()
         return render_template('index.html', properties=properties)
     else:
-        return redirect(url_for('login'))
+        return redirect('/login')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

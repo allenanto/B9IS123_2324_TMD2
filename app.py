@@ -16,6 +16,7 @@ with app.app_context():
     db.create_all()
 
 authenticated_user = None
+admin = None
 
 @app.route('/')
 def index():
@@ -86,6 +87,14 @@ def add_property():
         db.session.commit()
         return redirect(url_for('dashboard'))
     return render_template('add_property.html')
+
+
+@app.route('/admin')
+def admin_index():
+    if admin:
+        return redirect("/admin/dashboard")
+    else:
+        return redirect('/admin/login')
 
 @app.route('/admin/register', methods=['GET', 'POST'])
 def register_admin():

@@ -32,7 +32,7 @@ def register():
         password = request.form['password']
         email = request.form['email']
         existing_user = User.query.filter_by(username=username).first()
-        if not email or username or password:
+        if not email or not username or not password:
             flash('All fields are required.', 'error')
             return redirect(request.url)
         if existing_user:

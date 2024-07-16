@@ -2,19 +2,20 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask import flash, session
 from models import db, User, Property, Admin
 from flask_login import logout_user
+from config import Config
 
 app = Flask(__name__, static_url_path='/static')
-app.secret_key = 'secret_key'  # Replace with your actual secret key
-
+app.secret_key = Config.SECRET
 
 # Configure database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = Config.DATABASE_URI
 db.init_app(app)
 
 # Create database tables
 with app.app_context():
     db.create_all()
 
+#for handling sessions and users
 authenticated_user = None
 admin = None
 
@@ -43,7 +44,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             flash('Registration successful. You can now login.', 'success')
-            return redirect(url_for('login'))
+            return redirect('/login')
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])

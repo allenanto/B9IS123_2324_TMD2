@@ -106,14 +106,13 @@ def register_admin():
         existing_admin = Admin.query.filter_by(username=username).first()
         if existing_admin:
             flash('Username already exists. Please choose a different one.', 'error')
-            return redirect(url_for('register_admin'))
 
         new_admin = Admin(username=username, password=password)
         db.session.add(new_admin)
         db.session.commit()
 
         flash('Admin registration successful! You can now login.', 'success')
-        return redirect(url_for('admin_login'))
+        return redirect('/admin/login')
 
     return render_template('register_admin.html')
 
@@ -128,21 +127,21 @@ def admin_login():
         if admin and admin.password == password:
             session['admin_logged_in'] = True
             flash('Logged in successfully!', 'success')
-            return redirect(url_for('admin_dashboard'))
+            return redirect('/admin/dashboard')
         else:
             flash('Invalid username or password. Please try again.', 'error')
 
     return render_template('login_admin.html')
 
-from functools import wraps
+# from functools import wraps
 
-def admin_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if not session.get('admin_logged_in'):
-            return redirect(url_for('admin_login'))
-        return f(*args, **kwargs)
-    return decorated_function
+# def admin_required(f):
+#     @wraps(f)
+#     def decorated_function(*args, **kwargs):
+#         if not session.get('admin_logged_in'):
+#             return redirect(url_for('admin_login'))
+#         return f(*args, **kwargs)
+#     return decorated_function
 
 @app.route('/admin/dashboard')
 def admin_dashboard():
@@ -161,7 +160,7 @@ def create_property():
         db.session.add(new_property)
         db.session.commit()
         flash('Property created successfully!', 'success')
-        return redirect(url_for('admin_dashboard'))
+        return redirect('/admin/dashboard')
     return render_template('create_property.html')
 
 @app.route('/admin/update_property/<int:property_id>', methods=['GET', 'POST'])
@@ -175,7 +174,7 @@ def update_property(property_id):
         property.available = request.form.get('available', False)
         db.session.commit()
         flash('Property updated successfully!', 'success')
-        return redirect(url_for('admin_dashboard'))
+        return redirect('/admin/dashboard')
     return render_template('update_property.html', property=property)
 
 @app.route('/admin/delete_property/<int:property_id>')
@@ -184,7 +183,7 @@ def delete_property(property_id):
     db.session.delete(property)
     db.session.commit()
     flash('Property deleted successfully!', 'success')
-    return redirect(url_for('admin_dashboard'))
+    return redirect('/admin/dashboard')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

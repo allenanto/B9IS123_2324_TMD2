@@ -59,11 +59,15 @@ def login():
         if not username or not password:
             flash('Both username and password are required.', 'error')
             return redirect(request.url)
-        user = User.query.filter_by(username=username).first()
-        print(user)
+            
+        user = User.query.filter_by(username=username).first_or_404()
+
         if user:
-            authenticated_user = username
-            return redirect(url_for('index'))
+            user_dict = jsonify(user.to_dict())
+            print(user_dict)
+            if check_password_hash(user_dict["password"],password)
+                authenticated_user = username
+                return redirect(url_for('index'))
         else:
             flash('Invalid username or password.', 'error')
     return render_template('login.html')

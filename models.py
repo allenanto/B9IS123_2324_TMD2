@@ -8,6 +8,9 @@ class User(db.Model):
     password = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
 
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
 

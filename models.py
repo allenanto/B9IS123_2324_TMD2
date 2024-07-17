@@ -20,7 +20,7 @@ class Property(db.Model):
     description = db.Column(db.Text, nullable=False)
     location = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    available = db.Column(db.Boolean, default=True)
+    available = db.Column(db.String(5), default=True)
 
     def __repr__(self):
         return f"Property('{self.name}', '{self.location}', '{self.price}')"

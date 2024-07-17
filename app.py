@@ -164,7 +164,7 @@ def create_property():
         description = request.form['description']
         location = request.form['location']
         price = float(request.form['price'])
-        available = request.form.get('available', False)
+        available = request.form.get('available', "False")
         new_property = Property(name=name, description=description, location=location, price=price, available=available)
         db.session.add(new_property)
         db.session.commit()

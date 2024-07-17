@@ -59,7 +59,8 @@ def login():
         if not username or not password:
             flash('Both username and password are required.', 'error')
             return redirect(request.url)
-        user = User.query.filter_by(username=username, password=password).first()
+        user = User.query.filter_by(username=username).first()
+        print(user)
         if user:
             authenticated_user = username
             return redirect(url_for('index'))

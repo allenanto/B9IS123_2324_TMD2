@@ -66,7 +66,7 @@ def login():
         if user:
             user_dict = jsonify(user.to_dict())
             print(user_dict)
-            if check_password_hash(user_dict["password"],password)
+            if check_password_hash(user_dict["password"],password):
                 authenticated_user = username
                 return redirect(url_for('index'))
         else:

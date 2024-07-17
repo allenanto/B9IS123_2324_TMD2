@@ -3,6 +3,7 @@ from flask import flash, session
 from models import db, User, Property, Admin
 from flask_login import logout_user
 from config import Config
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = Config.SECRET
@@ -33,6 +34,8 @@ def register():
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
+        hashed_password = generate_password_hash(password)
+
         existing_user = User.query.filter_by(username=username).first()
         if not email or not username or not password:
             flash('All fields are required.', 'error')
@@ -40,7 +43,7 @@ def register():
         if existing_user:
             flash('Username already exists. Please choose a different one.', 'error')
         else:
-            new_user = User(username=username, password=password, email=email)
+            new_user = User(username=username, password=hashed_password, email=email)
             db.session.add(new_user)
             db.session.commit()
             flash('Registration successful. You can now login.', 'success')

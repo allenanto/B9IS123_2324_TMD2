@@ -4,6 +4,7 @@ from models import db, User, Property, Admin
 from flask_login import logout_user
 from config import Config
 from werkzeug.security import generate_password_hash, check_password_hash
+import jsonify
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = Config.SECRET

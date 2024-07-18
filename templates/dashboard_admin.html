@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
 </head>
@@ -11,23 +12,41 @@
     <div><h2>Welcome to the Admin Dashboard</h2>
     <a href="{{ url_for('create_property') }}">Create New Property</a>
     <br><br>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-        {% for property in properties %}
-        <tr>
-            <td>{{ property.name }}</td>
-            <td>{{ property.description }}</td>
-            <td>
-                <a href="{{ url_for('update_property', property_id=property.id) }}">Edit</a>
-                <a href="{{ url_for('delete_property', property_id=property.id) }}">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h2>Welcome to the Admin Dashboard</h2>
+        </div>
+
+        <h4>Manage Properties</h4>
+        <a class="btn btn-primary mb-3" href="{{ url_for('create_property') }}">Create New Property</a>
+        
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for property in properties %}
+                    <tr>
+                        <td>{{ property.name }}</td>
+                        <td>{{ property.description }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('update_property', property_id=property.id) }}">Edit</a>
+                            <a class="btn btn-sm btn-outline-danger" href="{{ url_for('delete_property', property_id=property.id) }}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

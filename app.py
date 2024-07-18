@@ -76,15 +76,21 @@ def login():
 
 @app.route('/logout')
 def logout():
+    global authenticated_user
     authenticated_user = None
-    return redirect(url_for('login'))
+    return redirect('/login')
 
 @app.route('/book/<int:property_id>', methods=['POST'])
 def book_property(property_id):
-    property = Property.query.get_or_404(property_id)
-    property.available = False
-    db.session.commit()
-    return redirect(url_for('index'))
+    global authenticated_user
+    if authenticated_user:
+        property = Property.query.get_or_404(property_id)
+        property.available = False
+        db.session.commit()
+        return redirect(url_for('index'))
+    else:
+        return redirect("/login")
+
 
 @app.route('/add_property', methods=['GET', 'POST'])
 def add_property():
@@ -103,6 +109,7 @@ def add_property():
 
 @app.route('/admin')
 def admin_index():
+    global admin
     if admin:
         return redirect("/admin/dashboard")
     else:
@@ -129,6 +136,7 @@ def register_admin():
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
+    global admin
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']

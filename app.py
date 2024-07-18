@@ -76,6 +76,7 @@ def login():
 
 @app.route('/logout')
 def logout():
+    authenticated_user = None
     return redirect(url_for('login'))
 
 @app.route('/book/<int:property_id>', methods=['POST'])

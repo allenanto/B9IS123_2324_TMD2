@@ -91,22 +91,6 @@ def book_property(property_id):
     else:
         return redirect("/login")
 
-
-@app.route('/add_property', methods=['GET', 'POST'])
-def add_property():
-    if request.method == 'POST':
-        name = request.form['name']
-        description = request.form['description']
-        location = request.form['location']
-        price = float(request.form['price'])
-        # Create a new property entry in the database
-        new_property = Property(name=name, description=description, location=location, price=price)
-        db.session.add(new_property)
-        db.session.commit()
-        return redirect(url_for('dashboard'))
-    return render_template('add_property.html')
-
-
 @app.route('/admin')
 def admin_index():
     global admin

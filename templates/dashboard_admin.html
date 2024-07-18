@@ -6,6 +6,16 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    
+    <script>
+        function confirmDelete(event, propertyId) {
+            event.preventDefault();
+            var confirmation = confirm("Are you sure you want to delete this property?");
+            if (confirmation) {
+                document.getElementById('delete-form-' + propertyId).submit();
+            }
+        }
+    </script>
 
 </head>
 <body>
@@ -32,7 +42,9 @@
                         <td>{{ property.description }}</td>
                         <td>
                             <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('update_property', property_id=property.id) }}">Edit</a>
-                            <a class="btn btn-sm btn-outline-danger" href="{{ url_for('delete_property', property_id=property.id) }}">Delete</a>
+                            <form id="delete-form-{{ property.id }}" action="{{ url_for('delete_property', property_id=property.id) }}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="confirmDelete(event, {{ property.id }})">Delete</button>
+                            </form>
                         </td>
                     </tr>
                     {% endfor %}

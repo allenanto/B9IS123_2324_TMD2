@@ -33,14 +33,17 @@ def index():
 def register():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']
         email = request.form['email']
+        password = request.form['password']
+        confirm_pass = request.form['confirm_password']
         hashed_password = generate_password_hash(password)
 
         existing_user = User.query.filter_by(username=username).first()
-        if not email or not username or not password:
+        if not email or not username or not password or not confirm_pass:
             flash('All fields are required.', 'error')
             return redirect(request.url)
+        if password != confirm_pass:
+            flash('Passwords doesnt match', 'error')
         if existing_user:
             flash('Username already exists. Please choose a different one.', 'error')
         else:

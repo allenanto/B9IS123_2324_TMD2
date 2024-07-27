@@ -114,7 +114,13 @@ def register_admin():
         if existing_admin:
             flash('Username already exists. Please choose a different one.', 'error')
 
-        new_admin = Admin(username=username, password=password)
+        if not username or not email or not password:
+            flash('All fields are required', 'error')
+
+        if password != confirm_password:
+            flash('Password missmatch', 'error')
+
+        new_admin = Admin(username=username, email=email, password=password)
         db.session.add(new_admin)
         db.session.commit()
 

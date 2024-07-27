@@ -111,21 +111,22 @@ def register_admin():
         confirm_password = request.form['confirm_password']
 
         existing_admin = Admin.query.filter_by(username=username).first()
-        if existing_admin:
-            flash('Username already exists. Please choose a different one.', 'error')
-
+        
         if not username or not email or not password:
             flash('All fields are required', 'error')
 
-        if password != confirm_password:
+        elif existing_admin:
+            flash('Username already exists. Please choose a different one.', 'error')
+
+        elif password != confirm_password:
             flash('Password missmatch', 'error')
 
-        new_admin = Admin(username=username, email=email, password=password)
-        db.session.add(new_admin)
-        db.session.commit()
-
-        flash('Admin registration successful! You can now login.', 'success')
-        return redirect('/admin/login')
+        else:
+            new_admin = Admin(username=username, email=email, password=password)
+            db.session.add(new_admin)
+            db.session.commit()
+            flash('Admin registration successful! You can now login.', 'success')
+            return redirect('/admin/login')
 
     return render_template('register_admin.html')
 

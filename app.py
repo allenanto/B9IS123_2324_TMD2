@@ -148,6 +148,12 @@ def admin_login():
 
     return render_template('login_admin.html')
 
+@app.route('/admin/logout')
+def admin_logout():
+    global admin
+    admin = None
+    return redirect('/admin/login')
+
 @app.route('/admin/dashboard')
 def admin_dashboard():
     properties = Property.query.all()

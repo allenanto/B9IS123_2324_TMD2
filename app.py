@@ -33,14 +33,17 @@ def index():
 def register():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']
         email = request.form['email']
+        password = request.form['password']
+        confirm_pass = request.form['confirm_password']
         hashed_password = generate_password_hash(password)
 
         existing_user = User.query.filter_by(username=username).first()
-        if not email or not username or not password:
+        if not email or not username or not password or not confirm_pass:
             flash('All fields are required.', 'error')
             return redirect(request.url)
+        if password != confirm_pass:
+            flash('Passwords doesnt match', 'error')
         if existing_user:
             flash('Username already exists. Please choose a different one.', 'error')
         else:
@@ -103,18 +106,27 @@ def admin_index():
 def register_admin():
     if request.method == 'POST':
         username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
+        confirm_password = request.form['confirm_password']
 
         existing_admin = Admin.query.filter_by(username=username).first()
-        if existing_admin:
+        
+        if not username or not email or not password:
+            flash('All fields are required', 'error')
+
+        elif existing_admin:
             flash('Username already exists. Please choose a different one.', 'error')
 
-        new_admin = Admin(username=username, password=password)
-        db.session.add(new_admin)
-        db.session.commit()
+        elif password != confirm_password:
+            flash('Password missmatch', 'error')
 
-        flash('Admin registration successful! You can now login.', 'success')
-        return redirect('/admin/login')
+        else:
+            new_admin = Admin(username=username, email=email, password=password)
+            db.session.add(new_admin)
+            db.session.commit()
+            flash('Admin registration successful! You can now login.', 'success')
+            return redirect('/admin/login')
 
     return render_template('register_admin.html')
 
@@ -135,13 +147,6 @@ def admin_login():
             flash('Invalid username or password. Please try again.', 'error')
 
     return render_template('login_admin.html')
-
-
-@app.route('/admin/logout')
-def admin_logout():
-    global admin
-    admin = None
-    return redirect('/admin/login')
 
 # from functools import wraps
 

@@ -148,16 +148,6 @@ def admin_login():
 
     return render_template('login_admin.html')
 
-# from functools import wraps
-
-# def admin_required(f):
-#     @wraps(f)
-#     def decorated_function(*args, **kwargs):
-#         if not session.get('admin_logged_in'):
-#             return redirect(url_for('admin_login'))
-#         return f(*args, **kwargs)
-#     return decorated_function
-
 @app.route('/admin/dashboard')
 def admin_dashboard():
     properties = Property.query.all()

@@ -106,7 +106,9 @@ def admin_index():
 def register_admin():
     if request.method == 'POST':
         username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
+        confirm_password = request.form['confirm_password']
 
         existing_admin = Admin.query.filter_by(username=username).first()
         if existing_admin:
@@ -138,16 +140,6 @@ def admin_login():
             flash('Invalid username or password. Please try again.', 'error')
 
     return render_template('login_admin.html')
-
-# from functools import wraps
-
-# def admin_required(f):
-#     @wraps(f)
-#     def decorated_function(*args, **kwargs):
-#         if not session.get('admin_logged_in'):
-#             return redirect(url_for('admin_login'))
-#         return f(*args, **kwargs)
-#     return decorated_function
 
 @app.route('/admin/dashboard')
 def admin_dashboard():

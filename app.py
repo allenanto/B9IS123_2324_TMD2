@@ -21,6 +21,7 @@ app.config['MAIL_PASSWORD'] = Config.MAIL_PASSWORD
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
+mail = Mail(app)
 db.init_app(app)
 
 # Create database tables
@@ -101,12 +102,15 @@ def book_property(property_id):
             flash('Property is already booked.')
             return redirect(url_for('index'))
 
-        # Generate booking code
         booking_code = str(uuid.uuid4())
+        recipient = User.query.filter_by(username=authenticated_user).first_or_404()
 
-        # Send email with booking code
-        msg = Message('Your Booking Code', sender='your_email@example.com', recipients=[authenticated_user.email])
-        msg.body = f'Your booking code is: {booking_code}. Thank you for booking with us!'
+        print(recipient.email)
+
+        subject = 'REMIS'
+        message = 'This is your Booking Code \n\n' + booking_code
+        msg = Message(subject, sender=Config.MAIL_USERNAME, recipients=[recipient.email])
+        msg.body = message
         mail.send(msg)
 
         # Update property status

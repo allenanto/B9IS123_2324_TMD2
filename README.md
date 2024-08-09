@@ -17,3 +17,8 @@ This is a simple Flask web application for managing real estate properties.
 
 ## Lucid chart Link
 - https://lucid.app/lucidchart/0bcb47b0-c0f8-4d67-a654-d138e821f5ab/edit?viewport_loc=-1118%2C-921%2C2400%2C1164%2C0_0&invitationId=inv_62ad3c40-0b52-41b4-b497-2436e93ccf68
+
+## References
+https://flask-mail.readthedocs.io/en/latest/
+https://flask.palletsprojects.com/en/3.0.x/
+https://getbootstrap.com/docs/5.3/getting-started/introduction/

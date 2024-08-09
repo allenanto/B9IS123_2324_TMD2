@@ -4,32 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Property</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2 class="mb-4">Update Property</h2>
+        <form action="{{ url_for('update_property', property_id=property.id) }}" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" value="{{ property.name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" class="form-control" rows="4" required>{{ property.description }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" class="form-control" value="{{ property.location }}" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" class="form-control" value="{{ property.price }}" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="available">Available:</label>
+                <select id="available" name="available" class="form-control" required>
+                    <option value="true" {% if property.available %}selected{% endif %}>Yes</option>
+                    <option value="false" {% if not property.available %}selected{% endif %}>No</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
-</head>
-<body>
-    <div>
-    <h2>Update Property</h2>
-    <form action="{{ url_for('update_property', property_id=property.id) }}" method="post">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" value="{{ property.name }}" required><br>
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description" required>{{ property.description }}</textarea><br>
-        <label for="location">Location:</label><br>
-        <input type="text" id="location" name="location" value="{{ property.location }}" required><br>
-        <label for="price">Price:</label><br>
-        <input type="number" id="price" name="price" value="{{ property.price }}" step="0.01" required><br>
-        <label for="available">Available:</label><br>
-        <select id="available" name="available" required>
-            <option value="true" {% if property.available %}selected{% endif %}>Yes</option>
-            <option value="false" {% if not property.available %}selected{% endif %}>No</option>
-        </select><br>
-        <input type="submit" value="Update">
-    </form>
-</div>
 </body>
 </html>

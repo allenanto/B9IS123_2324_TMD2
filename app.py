@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask import flash, session
+from flask_mail import Mail, Message
 from models import db, User, Property, Admin
 from flask_login import logout_user
 from config import Config
 from werkzeug.security import generate_password_hash, check_password_hash
+import uuid
+
 # import jsonify
 
 app = Flask(__name__, static_url_path='/static')
@@ -11,6 +14,13 @@ app.secret_key = Config.SECRET
 
 # Configure database
 app.config['SQLALCHEMY_DATABASE_URI'] = Config.DATABASE_URI
+app.config['MAIL_SERVER'] = Config.MAIL_SERVER
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = Config.MAIL_USERNAME
+app.config['MAIL_PASSWORD'] = Config.MAIL_PASSWORD
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+
 db.init_app(app)
 
 # Create database tables
@@ -82,14 +92,28 @@ def logout():
     global authenticated_user
     authenticated_user = None
     return redirect('/login')
-
 @app.route('/book/<int:property_id>', methods=['POST'])
 def book_property(property_id):
     global authenticated_user
     if authenticated_user:
         property = Property.query.get_or_404(property_id)
+        if not property.available:
+            flash('Property is already booked.')
+            return redirect(url_for('index'))
+
+        # Generate booking code
+        booking_code = str(uuid.uuid4())
+
+        # Send email with booking code
+        msg = Message('Your Booking Code', sender='your_email@example.com', recipients=[authenticated_user.email])
+        msg.body = f'Your booking code is: {booking_code}. Thank you for booking with us!'
+        mail.send(msg)
+
+        # Update property status
         property.available = False
         db.session.commit()
+
+        flash(f'Booking successful! Your booking code is {booking_code}.')
         return redirect(url_for('index'))
     else:
         return redirect("/login")

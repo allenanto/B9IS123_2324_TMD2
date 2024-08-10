@@ -22,4 +22,6 @@ This is a simple Flask web application for managing real estate properties.
 https://flask-mail.readthedocs.io/en/latest/
 https://flask.palletsprojects.com/en/3.0.x/
 https://getbootstrap.com/docs/5.3/getting-started/introduction/
-Some helps were taken using GenAI
+https://docs.render.com/deploy-flask
+
+Some helps were taken using OpenAI for finding correct syntaxes and implemented as per the application needs

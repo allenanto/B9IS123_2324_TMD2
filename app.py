@@ -1,3 +1,6 @@
+
+# Some helps were taken using OpenAI for finding correct syntaxes and implemented as per the application needs
+
 from flask import Flask, render_template, request, redirect, url_for
 from flask import flash, session
 from flask_mail import Mail, Message
@@ -12,11 +15,11 @@ import uuid
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = Config.SECRET
 
-# Configure database
+# Configure Appliation and mail setup
 app.config['SQLALCHEMY_DATABASE_URI'] = Config.DATABASE_URI
 app.config['MAIL_SERVER'] = Config.MAIL_SERVER
 app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = Config.MAIL_USERNAME
+app.config['MAIL_USERNAME'] = Config.MAIL_USERNAMEs
 app.config['MAIL_PASSWORD'] = Config.MAIL_PASSWORD
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False

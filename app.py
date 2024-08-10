@@ -93,6 +93,7 @@ def logout():
     global authenticated_user
     authenticated_user = None
     return redirect('/login')
+
 @app.route('/book/<int:property_id>', methods=['POST'])
 def book_property(property_id):
     global authenticated_user
